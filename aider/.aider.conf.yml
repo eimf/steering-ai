@@ -1,0 +1,11 @@
+# Aider project configuration
+# Place this file at your project root as .aider.conf.yml
+
+# Load convention files as read-only context
+read:
+  - CONVENTIONS.md
+
+# Git settings
+auto-commits: false
+attribute-author: false
+attribute-committer: false

@@ -1,0 +1,14 @@
+---
+description: Prefer performance in all code changes
+alwaysApply: true
+---
+
+# Performance
+
+- Minimize re-renders, bundle size, and API round-trips
+- Avoid N+1 queries; use pagination and indexed lookups
+- No heavy dependencies without clear need; prefer simple fast paths over extra abstraction
+- Do not fetch data the UI does not need; cache/dedupe where the codebase already does
+- Prefer lazy loading and code splitting for non-critical paths
+- Use memoization where computation is expensive and inputs are stable
+- Prefer streaming/chunked responses for large data sets
