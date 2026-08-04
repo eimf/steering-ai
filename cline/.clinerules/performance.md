@@ -1,7 +1,5 @@
 # Performance
 
-Prefer performance in all code changes.
-
 - Minimize re-renders, bundle size, and API round-trips
 - Avoid N+1 queries; use pagination and indexed lookups
 - No heavy dependencies without clear need; prefer simple fast paths over extra abstraction

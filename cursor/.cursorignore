@@ -1,0 +1,12 @@
+# Extra ignore for Cursor indexing / agent context
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+*.min.js
+*.map
+.env
+.env.*
+!.env.example

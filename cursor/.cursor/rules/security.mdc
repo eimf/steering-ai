@@ -1,0 +1,13 @@
+---
+description: Security standards — secrets, queries, validation, pinned deps
+alwaysApply: true
+---
+
+# Security
+
+- Never commit secrets: `.env`, `.env.local`, API keys, tokens, credentials
+- Never log or echo sensitive values in output
+- Use environment variables for all secrets
+- Use parameterized queries — never string concatenation for SQL
+- Validate and sanitize all external inputs
+- Prefer pinned dependency versions over open ranges

@@ -1,3 +1,7 @@
+---
+inclusion: always
+---
+
 # Agent Behavior
 
 ## Explicit actions only

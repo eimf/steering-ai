@@ -1,0 +1,7 @@
+# Gemini Code Assist (GitHub) review config example
+# Copy to config.yaml and adjust.
+# Docs: https://developers.google.com/gemini-code-assist/docs/customize-gemini-behavior-github
+
+ignore_patterns:
+  - "**/*.generated.*"
+  - "**/dist/**"

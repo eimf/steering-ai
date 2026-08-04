@@ -1,21 +1,21 @@
 # steering-ai
 
-General-purpose AI steering/rules files for every major AI coding assistant. Copy the folder for your tool into your project and customize.
+General-purpose AI steering/rules templates for every major AI coding assistant. Copy the folder for your tool into your project and customize.
 
 ## Supported Tools
 
 | Tool | Location | Format |
 |------|----------|--------|
-| **Kiro** | `kiro/steering/*.md` | Plain markdown (auto-loaded from `.kiro/steering/`) |
-| **Cursor** | `cursor/rules/*.mdc` | MDC (Markdown + YAML frontmatter) |
-| **Windsurf / Cascade** | `windsurf/rules/*.md` | Markdown + YAML frontmatter |
-| **Claude Code** | `claude-code/CLAUDE.md` | Plain markdown at project root |
-| **Antigravity** | `antigravity/AGENTS.md` + `.agents/rules.md` | Plain markdown |
-| **GitHub Copilot** | `copilot/.github/copilot-instructions.md` | Plain markdown |
-| **Cline** | `cline/.cline/rules/conventions.md` | Plain markdown |
-| **Aider** | `aider/.aider.conf.yml` + `CONVENTIONS.md` | YAML config + markdown |
-| **Amazon Q** | `amazon-q/.amazonq/rules/conventions.md` | Plain markdown |
-| **Gemini Code Assist** | `gemini/.gemini/styleguide.md` | Plain markdown |
+| **Kiro** | `kiro/.kiro/steering/*.md` (+ skills, agents, hooks, specs, …) | Markdown + `inclusion` frontmatter |
+| **Cursor** | `cursor/.cursor/rules/*.mdc` (+ skills, agents, commands, hooks) | MDC (Markdown + YAML frontmatter) |
+| **Windsurf / Cascade** | `windsurf/.devin/rules/*.md` (fallback: `.windsurf/rules/`) | Markdown + YAML frontmatter |
+| **Claude Code** | `claude-code/CLAUDE.md` + `.claude/rules/*.md` | Plain markdown |
+| **Antigravity** | `antigravity/AGENTS.md` + `.agents/rules/*.md` | Plain markdown |
+| **GitHub Copilot** | `copilot/.github/copilot-instructions.md` + `instructions/*.instructions.md` | Plain markdown + `applyTo` |
+| **Cline** | `cline/.clinerules/*.md` (+ `.cline/` tree) | Plain markdown |
+| **Aider** | `aider/.aider.conf.yml` + `CONVENTIONS.md` + `.aiderignore` | YAML config + markdown |
+| **Amazon Q** | `amazon-q/.amazonq/rules/*.md` | Plain markdown |
+| **Gemini** | `gemini/GEMINI.md` + `.gemini/styleguide.md` | Plain markdown (+ config example) |
 
 ## Quick Start
 
@@ -27,42 +27,53 @@ General-purpose AI steering/rules files for every major AI coding assistant. Cop
 
 ```bash
 # Kiro
-cp -r kiro/steering/ /path/to/your-project/.kiro/steering/
+cp -r kiro/.kiro/ /path/to/your-project/.kiro/
+cp kiro/AGENTS.md /path/to/your-project/
+cp kiro/.kiroignore /path/to/your-project/
 
 # Cursor
-cp -r cursor/rules/ /path/to/your-project/.cursor/rules/
+cp -r cursor/.cursor/ /path/to/your-project/.cursor/
+cp cursor/AGENTS.md /path/to/your-project/
+cp cursor/.cursorignore /path/to/your-project/
 
-# Windsurf / Cascade
-cp -r windsurf/rules/ /path/to/your-project/.windsurf/rules/
+# Windsurf / Cascade (preferred .devin path)
+cp -r windsurf/.devin/ /path/to/your-project/.devin/
+cp windsurf/AGENTS.md /path/to/your-project/
+# Optional legacy fallback:
+# cp -r windsurf/.windsurf/ /path/to/your-project/.windsurf/
 
 # Claude Code
-cp claude-code/CLAUDE.md /path/to/your-project/CLAUDE.md
+cp claude-code/CLAUDE.md /path/to/your-project/
+cp -r claude-code/.claude/ /path/to/your-project/.claude/
 
 # Antigravity
-cp antigravity/AGENTS.md /path/to/your-project/AGENTS.md
+cp antigravity/AGENTS.md /path/to/your-project/
 cp -r antigravity/.agents/ /path/to/your-project/.agents/
 
 # GitHub Copilot
 mkdir -p /path/to/your-project/.github
-cp copilot/.github/copilot-instructions.md /path/to/your-project/.github/
+cp -r copilot/.github/ /path/to/your-project/.github/
 
 # Cline
+cp -r cline/.clinerules/ /path/to/your-project/.clinerules/
 cp -r cline/.cline/ /path/to/your-project/.cline/
 
 # Aider
 cp aider/.aider.conf.yml /path/to/your-project/
 cp aider/CONVENTIONS.md /path/to/your-project/
+cp aider/.aiderignore /path/to/your-project/
 
 # Amazon Q
 cp -r amazon-q/.amazonq/ /path/to/your-project/.amazonq/
 
-# Gemini Code Assist
+# Gemini (CLI + Code Assist)
+cp gemini/GEMINI.md /path/to/your-project/
 cp -r gemini/.gemini/ /path/to/your-project/.gemini/
 ```
 
 ## What's Included
 
-All tool configs enforce the same set of general-purpose conventions:
+All tool configs enforce the same general-purpose conventions (see [`shared/topics/`](shared/topics/)):
 
 ### Agent Behavior
 - Only commit/push/deploy when explicitly asked
@@ -91,29 +102,91 @@ All tool configs enforce the same set of general-purpose conventions:
 - Input validation
 - Pinned dependency versions
 
+## Folder trees (project-level)
+
+Each tool template mirrors the **documented project paths** so you can expand beyond base conventions.
+
+### Kiro — `kiro/`
+
+```text
+AGENTS.md
+.kiroignore
+.kiro/
+  steering/          # product, tech, structure + topic rules (inclusion modes)
+  skills/            # on-demand SKILL.md packages
+  agents/            # custom agent profiles
+  hooks/             # event automation (*.json)
+  specs/             # requirements → design → tasks
+  prompts/           # CLI reusable prompts
+  settings/          # mcp.json.example
+```
+
+### Cursor — `cursor/`
+
+```text
+AGENTS.md
+.cursorignore
+.cursor/
+  rules/             # *.mdc with alwaysApply / globs / description
+  skills/
+  agents/
+  commands/
+  hooks.json.example
+  hooks/
+```
+
+### Others (summary)
+
+| Tool | Expandable dirs |
+|------|-----------------|
+| Windsurf | `.devin/rules/`, `AGENTS.md`, `.windsurf/rules/` fallback |
+| Claude Code | `.claude/rules/`, `skills/`, `agents/`, `commands/` |
+| Antigravity | `.agents/rules/`, `skills/`, `workflows/` |
+| Copilot | `.github/instructions/`, `.github/agents/` |
+| Cline | `.clinerules/`, `.cline/{rules,skills,agents}/` |
+| Amazon Q | `.amazonq/rules/*.md` |
+| Gemini | `GEMINI.md`, `.gemini/styleguide.md`, `config.yaml.example` |
+| Aider | `.aider.conf.yml`, `CONVENTIONS.md`, `.aiderignore` |
+
+Empty capability folders include a short `README.md` with the doc link and how to add the first file.
+
 ## Customization
 
-The `shared/conventions.md` file is the single source of truth for all conventions. Edit it to change the base rules, then update the tool-specific files to match.
+1. Edit [`shared/topics/`](shared/topics/) (source of truth)
+2. Update the matching tool-specific files
+3. For project-specific guidance, add more files in that tool's rules/steering folder
 
-For project-specific rules (deployment playbooks, architecture docs, stack details), add additional files alongside these base conventions:
+Examples:
 
-- **Kiro**: Add more `.md` files to `.kiro/steering/`
-- **Cursor**: Add more `.mdc` files to `.cursor/rules/` (use `globs` for file-specific rules)
-- **Windsurf**: Add more `.md` files to `.windsurf/rules/` (use `trigger: glob` for file-specific)
-- **Claude Code**: Append sections to `CLAUDE.md`
-- **Copilot**: Append sections to `.github/copilot-instructions.md`
+- **Kiro**: add `.kiro/steering/*.md` with `inclusion: always|fileMatch|manual|auto`
+- **Cursor**: add `.cursor/rules/*.mdc` (use `globs` for file-specific rules)
+- **Windsurf**: add `.devin/rules/*.md` (use `trigger: glob` for file-specific)
+- **Claude Code**: add `.claude/rules/*.md` or append to `CLAUDE.md`
+- **Copilot**: add `.github/instructions/*.instructions.md` with `applyTo`
 
 ## Global Installation
 
-Some tools support global/user-level steering that applies to all projects:
+Some tools also support user-level config (applies across projects):
 
 | Tool | Global Location |
 |------|----------------|
-| Kiro | `~/.kiro/steering/` |
-| Claude Code | `~/CLAUDE.md` |
+| Kiro | `~/.kiro/steering/`, `~/.kiro/skills/`, `~/.kiro/agents/`, `~/.kiro/hooks/`, `~/.kiro/powers/` |
+| Cursor | `~/.cursor/skills/`, `~/.cursor/agents/`, `~/.cursor/hooks.json` (User Rules via Settings UI) |
+| Claude Code | `~/.claude/CLAUDE.md`, `~/.claude/rules/`, `~/.claude/skills/` |
 | Aider | `~/.aider.conf.yml` |
+| Gemini CLI | `~/.gemini/GEMINI.md` |
 
 ## File Format Reference
+
+### Kiro (steering)
+```yaml
+---
+inclusion: always          # always | fileMatch | manual | auto
+fileMatchPattern: "**/*.ts"  # when inclusion is fileMatch
+---
+
+# Rule content in markdown
+```
 
 ### Cursor (.mdc)
 ```yaml
@@ -126,7 +199,7 @@ alwaysApply: true       # true = always loaded, false = conditional
 # Rule content in markdown
 ```
 
-### Windsurf (.md with frontmatter)
+### Windsurf / Devin (.md with frontmatter)
 ```yaml
 ---
 trigger: always_on      # always_on | manual | model_decision | glob
@@ -138,18 +211,27 @@ globs:                  # Required when trigger is glob
 # Rule content in markdown
 ```
 
+### Copilot path instructions
+```yaml
+---
+applyTo: "**/*.{ts,tsx}"
+---
+
+# Instruction content
+```
+
 ### All Others
-Plain markdown — no special syntax required.
+Plain markdown — no special syntax required (unless the tool's docs add frontmatter).
 
 ## Limits
 
-- **Windsurf**: 6,000 chars per rule / 12,000 chars total active
-- **Cursor**: Similar per-rule and total budget
+- **Windsurf**: ~6,000 chars per rule / ~12,000 chars total active
+- **Cursor**: Keep each rule focused (~500 lines max recommended)
 - **Others**: No documented hard limits, but shorter = better for context efficiency
 
 ## Contributing
 
-1. Edit `shared/conventions.md` with your proposed change
+1. Edit `shared/topics/` with your proposed change
 2. Update the relevant tool-specific files to match
 3. Submit a PR
 

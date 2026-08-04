@@ -1,0 +1,12 @@
+# Exclude from Aider repo map / focus (gitignore syntax)
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+*.min.js
+*.map
+.env
+.env.*
+!.env.example

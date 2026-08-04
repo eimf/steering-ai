@@ -1,3 +1,7 @@
+---
+inclusion: always
+---
+
 # Code Quality
 
 ## General principles

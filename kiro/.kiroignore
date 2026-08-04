@@ -1,0 +1,12 @@
+# Ignore patterns for Kiro agent context (gitignore syntax)
+node_modules/
+dist/
+build/
+.next/
+.turbo/
+coverage/
+*.min.js
+*.map
+.env
+.env.*
+!.env.example

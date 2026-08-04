@@ -1,3 +1,7 @@
+---
+inclusion: always
+---
+
 # Git Commits
 
 ## When to commit
